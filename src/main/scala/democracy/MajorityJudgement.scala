@@ -33,9 +33,7 @@ object Grade:
   def median(grades: Seq[Grade]): Grade =
     val sortedGrade =  grades.sortBy((i)=>i.ordinal)
     val sortedGradeSizeMid = sortedGrade.size/2
-    if sortedGradeSizeMid -1 >=0 then
-      sortedGrade(sortedGradeSizeMid-1)
-    else sortedGrade(sortedGradeSizeMid)   
+      sortedGrade(sortedGradeSizeMid)   
   end median 
 end Grade
 
@@ -84,7 +82,7 @@ case class Election(description: String, candidates: Set[Candidate]):
     // containing all the grades that were assigned to a given
     // `Candidate`.
     val gradesPerCandidate: Map[Candidate, Seq[Grade]] =
-      ballots.groupMap[Candidate, Seq[Grade]]()
+      allGrades.groupMap(_._1)(_._2)
 
     findWinner(gradesPerCandidate)
   end elect
@@ -144,7 +142,7 @@ case class Election(description: String, candidates: Set[Candidate]):
   
         // Finally, call `findWinner` on the reduced collection of candidates,
         // `bestCandidatesMinusOneMedianGrade`.
-       findWinner(bestCandidatesMinusOneMedianGrade)
+        findWinner(bestCandidatesMinusOneMedianGrade)
   end findWinner
 
 end Election
